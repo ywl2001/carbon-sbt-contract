@@ -1,0 +1,19 @@
+{
+  "name": "Carbon Identity #1",
+  "description": "Personal Carbon Score Identity",
+  "image": "https://via.placeholder.com/300",
+  "attributes": [
+    {
+      "trait_type": "Carbon Score",
+      "value": 82
+    },
+    {
+      "trait_type": "Level",
+      "value": "Green"
+    },
+    {
+      "trait_type": "Consistency Days",
+      "value": 30
+    }
+  ]
+}
