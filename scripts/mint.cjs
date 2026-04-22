@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 
 async function main() {
-  const contractAddress = "0xa6F0068DD8EF1D30713328e5D78C740ED3D586d4";
+  const contractAddress = "0xc4b771441f21b4e81454eD079edfD3b0503FFa2E";
 
   const [deployer] = await hre.ethers.getSigners();
 
@@ -14,15 +14,24 @@ async function main() {
 
   const to = deployer.address;
   const tokenURI = "ipfs://your-carbon-metadata";
-  const level = 1;
+  const initialScore = 10;
+  const initialLevel = 1;
 
-  const tx = await contract.mint(to, tokenURI, level);
+  const tx = await contract.mint(
+    to,
+    tokenURI,
+    initialScore,
+    initialLevel
+  );
+
   await tx.wait();
 
   console.log("SBT Minted ✅");
   console.log("Owner:", to);
-  console.log("Level:", level);
+  console.log("Score:", initialScore);
+  console.log("Level:", initialLevel);
 }
+
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

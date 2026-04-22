@@ -8,6 +8,7 @@ contract CarbonSBT is ERC721, Ownable {
     uint256 private _nextTokenId;
 
     mapping(address => bool) public hasMinted;
+    mapping(address => uint256) public userScore;
     mapping(address => uint256) public userLevel;
     mapping(uint256 => string) private _tokenURIs;
     mapping(address => uint256) private _ownedTokenId;
@@ -17,7 +18,12 @@ contract CarbonSBT is ERC721, Ownable {
 
     constructor() ERC721("Carbon Soulbound Token", "CSBT") {}
 
-    function mint(address to, string memory metadataURI, uint256 level) external onlyOwner {
+    function mint(
+        address to,
+        string memory metadataURI,
+        uint256 initialScore,
+        uint256 initialLevel
+    ) external onlyOwner {
         if (hasMinted[to]) revert AlreadyMinted();
 
         uint256 tokenId = _nextTokenId;
@@ -26,8 +32,24 @@ contract CarbonSBT is ERC721, Ownable {
         _safeMint(to, tokenId);
         _tokenURIs[tokenId] = metadataURI;
         hasMinted[to] = true;
-        userLevel[to] = level;
+        userScore[to] = initialScore;
+        userLevel[to] = initialLevel;
         _ownedTokenId[to] = tokenId;
+    }
+
+    function updateCarbonData(
+        address user,
+        uint256 newScore,
+        uint256 newLevel,
+        string memory newMetadataURI
+    ) external onlyOwner {
+        require(hasMinted[user], "User has not minted");
+
+        uint256 tokenId = _ownedTokenId[user];
+
+        userScore[user] = newScore;
+        userLevel[user] = newLevel;
+        _tokenURIs[tokenId] = newMetadataURI;
     }
 
     function updateLevel(address user, uint256 newLevel) external onlyOwner {
@@ -43,6 +65,11 @@ contract CarbonSBT is ERC721, Ownable {
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         require(_exists(tokenId), "Token does not exist");
         return _tokenURIs[tokenId];
+    }
+
+    function getScore(address user) external view returns (uint256) {
+        require(hasMinted[user], "User has not minted");
+        return userScore[user];
     }
 
     function getLevel(address user) external view returns (uint256) {
