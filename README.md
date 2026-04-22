@@ -107,15 +107,14 @@ tokenURI(tokenId)
 
 ## 🔁 Workflow
 
-1. Deploy Contract
-
-npx hardhat run scripts/deploy.cjs --network sepolia
-2. Mint SBT
-npx hardhat run scripts/mint.cjs --network sepolia
-3. Update from Behavior
-npx hardhat run scripts/updateWithMetadata.cjs --network sepolia
-4. Read Identity
-npx hardhat run scripts/read.cjs --network sepolia
+- 1. Deploy Contract
+  npx hardhat run scripts/deploy.cjs --network sepolia
+- 1. Mint SBT
+  npx hardhat run scripts/mint.cjs --network sepolia
+- 1. Update from Behavior
+  npx hardhat run scripts/updateWithMetadata.cjs --network sepolia
+- 1. Read Identity
+  npx hardhat run scripts/read.cjs --network sepolia
 
 ---
 
